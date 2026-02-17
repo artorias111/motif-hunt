@@ -59,7 +59,7 @@ func (m model) View() string {
 	}
 
 	return fmt.Sprintf(
-		"Motif Hunter 🧬\n\n%s\n\n%s\n\n(esc to quit)",
+		"DNA Motif Hunter\n\n%s\n\n%s\n\n(esc to quit)",
 		m.textInput.View(),
 		display,
 	)

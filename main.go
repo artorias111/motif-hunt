@@ -1,13 +1,14 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"os"
 	"strings"
 
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
+	"github.com/charmbracelet/lipgloss" // this is so cool
 )
 
 type model struct {
@@ -71,20 +72,27 @@ func main() {
 		return
 	}
 
-	raw, err := os.ReadFile(os.Args[1])
+	file, err := os.Open(os.Args[1])
 	if err != nil {
-		fmt.Printf("Error reading file: %v", err)
+		fmt.Printf("Error reading the file: %v", err)
 		return
 	}
 
-	fileStr := string(raw)
-	if len(fileStr) > 500 {
-		fileStr = fileStr[:500]
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		line := scanner.Text()
+		fmt.Printf("%v\n", line)
 	}
 
+
+	// delete everything below
+/*
 	p := tea.NewProgram(initialModel(fileStr))
 	if _, err := p.Run(); err != nil {
 		fmt.Printf("Alas, there's been an error: %v", err)
 		os.Exit(1)
 	}
+*/
 }
